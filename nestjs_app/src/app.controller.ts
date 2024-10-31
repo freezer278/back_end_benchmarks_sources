@@ -1,14 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import {DataSource, getRepository, Repository} from "typeorm";
-import {User} from "./entities/user.entity";
-import {randomInt} from "./utils/random";
-import {InjectRepository} from "@nestjs/typeorm";
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { randomInt } from './utils/random';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller()
 export class AppController {
   constructor(
-      @InjectRepository(User) private usersRepository: Repository<User>
+    @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
   @Get('api/v1/hello-world')
@@ -25,10 +24,10 @@ export class AppController {
     const startId = randomInt(1, allItemsCount - itemsToTake);
 
     const users = await this.usersRepository
-        .createQueryBuilder('users')
-        .where('users.id >= :startId', { startId })
-        .limit(30)
-        .getMany();
+      .createQueryBuilder('users')
+      .where('users.id >= :startId', { startId })
+      .limit(30)
+      .getMany();
 
     return users;
   }

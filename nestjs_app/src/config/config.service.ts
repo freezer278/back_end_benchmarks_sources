@@ -39,7 +39,17 @@ export class ConfigService extends NestConfigService {
       username: this.get<string>('DB_USER', 'root'),
       password: this.get<string>('DB_PASSWORD', 'root'),
       database: this.get<string>('DB_DATABASE', 'test_db'),
-      synchronize: this.get<boolean>('DB_SYNCHRONIZE', false),
+      synchronize: this.shouldSynchronizeDB(false),
     };
+  }
+
+  public shouldSynchronizeDB(defaultValue: boolean = false): boolean {
+    const rawValue = this.get<string>('DB_SYNCHRONIZE');
+
+    if (!rawValue) {
+      return defaultValue;
+    }
+
+    return rawValue === 'true';
   }
 }

@@ -11,13 +11,13 @@ export class User {
     @Column({unique: true})
     email: string;
 
-    @Column({name: 'email_verified_at', type: 'timestamp'})
+    @Column({name: 'email_verified_at', type: 'timestamp', nullable: true})
     emailVerifiedAt: Date | null;
 
     @Column()
     password: string
 
-    @Column({name: 'remember_token'})
+    @Column({name: 'remember_token', nullable: true})
     rememberToken: string | null
 
     @CreateDateColumn({name: 'created_at', type: 'timestamp'})
