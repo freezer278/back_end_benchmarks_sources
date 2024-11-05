@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+// fastify option (faster)
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -8,8 +9,8 @@ import {
 // fastify option (faster)
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
-      AppModule,
-      new FastifyAdapter()
+    AppModule,
+    new FastifyAdapter(),
   );
   await app.listen({
     host: '0.0.0.0',
@@ -17,7 +18,7 @@ async function bootstrap() {
   });
 }
 
-// express option (default):
+// // express option (default):
 // async function bootstrap() {
 //   const app = await NestFactory.create(AppModule);
 //   await app.listen(3000);
