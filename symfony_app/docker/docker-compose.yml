@@ -7,6 +7,7 @@ services:
         - INSTALL_XDEBUG=${INSTALL_XDEBUG}
     environment:
       PHP_IDE_CONFIG: "serverName=Docker"
+      DATABASE_URL: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@db:5432/${DB_DATABASE}?serverVersion=17&charset=utf8"
     volumes:
       - ..:/var/www/
     depends_on:
