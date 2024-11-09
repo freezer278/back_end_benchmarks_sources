@@ -1,0 +1,37 @@
+services:
+  php_fpm:
+    build:
+      context: ./../
+      dockerfile: ./docker/php_fpm/Dockerfile
+      args:
+        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+    volumes:
+      - ..:/var/www/
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - ${NGINX_HOST_HTTP_PORT}:80
+    volumes:
+      - ..:/var/www:rw
+    depends_on:
+      - php_fpm
+
+  db:
+      image: postgres:alpine
+      ports:
+          - ${DB_PORT}:5432
+      environment:
+          POSTGRES_DB: ${DB_DATABASE}
+          POSTGRES_USER: ${DB_USERNAME}
+          POSTGRES_PASSWORD: ${DB_PASSWORD}
+      volumes:
+          - db_data:/var/lib/postgresql/data:rw
+
+volumes:
+    db_data:
