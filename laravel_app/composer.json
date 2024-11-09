@@ -6,12 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "firebase/php-jwt": "^6.10",
         "laravel/framework": "^11.9",
         "laravel/octane": "^2.5",
         "laravel/tinker": "^2.9",
         "spiral/roadrunner-cli": "^2.6",
-        "spiral/roadrunner-http": "^3.5",
-        "vmorozov/laravel-prometheus": "dev-main"
+        "spiral/roadrunner-http": "^3.5"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
