@@ -1,20 +1,6 @@
-FROM php:8.3-cli-alpine
+FROM freezer278/php_cli_prod_base:8.3
 
 WORKDIR /app
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-RUN apk add unzip
-
-# install all needed php extensions
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod 777 /usr/local/bin/install-php-extensions
-ARG PHP_EXTENSIONS="intl bcmath zip apcu exif pcntl sockets redis pdo_pgsql"
-RUN install-php-extensions ${PHP_EXTENSIONS}
-RUN rm /usr/local/bin/install-php-extensions
-
-# Use the default production configuration
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY . ./
 
