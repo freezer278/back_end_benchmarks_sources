@@ -13,6 +13,9 @@ ARG PHP_EXTENSIONS="intl bcmath zip apcu exif pcntl sockets redis pdo_pgsql"
 RUN install-php-extensions ${PHP_EXTENSIONS}
 RUN rm /usr/local/bin/install-php-extensions
 
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 COPY . ./
 
 RUN composer install
