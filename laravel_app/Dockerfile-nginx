@@ -1,0 +1,8 @@
+FROM nginx:alpine
+
+WORKDIR /app
+
+COPY . ./
+
+COPY ./docker/nginx/prod.conf /etc/nginx/nginx.conf
+COPY ./docker/nginx/prod_app.conf /etc/nginx/conf.d/prod_app.conf

@@ -1,7 +1,7 @@
 FROM php:8.3-fpm-alpine
 
 # Install packages
-RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash zip unzip ffmpeg
+RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash zip unzip
 
 # Xdebug
 ARG INSTALL_XDEBUG=false
@@ -14,7 +14,7 @@ COPY ./docker/php_fpm/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 # Php extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod 777 /usr/local/bin/install-php-extensions
-ARG PHP_EXTENSIONS="ldap intl pdo_pgsql xml bcmath mbstring zip sqlite3 apcu exif redis"
+ARG PHP_EXTENSIONS="ldap intl pdo_pgsql xml bcmath mbstring zip sqlite3 apcu exif redis sockets"
 RUN install-php-extensions ${PHP_EXTENSIONS}
 RUN rm /usr/local/bin/install-php-extensions
 
