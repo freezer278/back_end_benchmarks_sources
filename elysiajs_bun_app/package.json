@@ -9,9 +9,11 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "elysia": "latest",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/pg": "^8.11.10",
     "bun-types": "latest"
   },

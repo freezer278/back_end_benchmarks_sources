@@ -1,6 +1,7 @@
 import { Elysia } from "elysia";
 import 'dotenv/config';
-import {UsersRepository} from "./UsersRepository"; // Automatically loads variables from .env
+import {UsersRepository} from "./UsersRepository";
+import jwt from 'jsonwebtoken';
 
 const app = new Elysia()
     .get("/", () => "Hello Elysia")
@@ -23,9 +24,27 @@ const app = new Elysia()
         };
     })
     .get("/api/v1/jwt", () => {
-        //  todo: add jwt code here
+        const PRIVATE_KEY = 'some_private_jwt_key_string';
+
+        const userId = 321321;
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        const payload = {
+            iss: 'http://example.org',
+            aud: 'http://example.com',
+            iat: currentTime,
+            exp: currentTime + 3600,
+            sub: userId,
+        };
+        const algorithm = 'HS256';
+
+        const token = jwt.sign(payload, PRIVATE_KEY, { algorithm });
+
+        const decoded = jwt.verify(token, PRIVATE_KEY, { algorithms: [algorithm] });
+
         return {
-            message: "Hello World",
+            token,
+            decoded,
         };
     })
     .listen(3000);
