@@ -7,9 +7,12 @@
     "prod": "bun run src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "dotenv": "^16.4.7",
+    "elysia": "latest",
+    "pg": "^8.13.1"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.10",
     "bun-types": "latest"
   },
   "module": "src/index.js"

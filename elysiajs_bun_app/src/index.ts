@@ -1,4 +1,6 @@
 import { Elysia } from "elysia";
+import 'dotenv/config';
+import {UsersRepository} from "./UsersRepository"; // Automatically loads variables from .env
 
 const app = new Elysia()
     .get("/", () => "Hello Elysia")
@@ -7,10 +9,17 @@ const app = new Elysia()
             message: "Hello World",
         };
     })
-    .get("/api/v1/users", () => {
-        //  todo: add users response here
+    .get("/api/v1/users", async () => {
+        const usersRepository = new UsersRepository();
+
+        const allItemsCount: number = await usersRepository.count();
+        const itemsToTake = 30;
+        const startId = randomInt(1, allItemsCount - itemsToTake);
+
+        const users = await usersRepository.getUsersAfterId(startId, itemsToTake);
+
         return {
-            message: "Hello World",
+            data: users,
         };
     })
     .get("/api/v1/jwt", () => {
@@ -24,3 +33,8 @@ const app = new Elysia()
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
+
+
+function randomInt(min: number, max: number) {
+    return Math.ceil(Math.random() * (max - min) + min);
+}
