@@ -3,6 +3,8 @@ import 'dotenv/config';
 import {UsersRepository} from "./UsersRepository";
 import jwt from 'jsonwebtoken';
 
+const usersRepository = new UsersRepository();
+
 const app = new Elysia()
     .get("/", () => "Hello Elysia")
     .get("/api/v1/hello-world", () => {
@@ -11,8 +13,6 @@ const app = new Elysia()
         };
     })
     .get("/api/v1/users", async () => {
-        const usersRepository = new UsersRepository();
-
         const allItemsCount: number = await usersRepository.count();
         const itemsToTake = 30;
         const startId = randomInt(1, allItemsCount - itemsToTake);
