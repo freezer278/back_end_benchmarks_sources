@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { randomInt } from './utils/random';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as jwt from 'jsonwebtoken';
 
 @Controller()
 export class AppController {
@@ -30,5 +31,31 @@ export class AppController {
       .getMany();
 
     return users;
+  }
+
+  @Get('api/v1/jwt')
+  async testJwtTokenGenerationAndParsing(): Promise<any> {
+    const PRIVATE_KEY = 'some_private_jwt_key_string';
+
+    const userId = 321321;
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    const payload = {
+      iss: 'http://example.org',
+      aud: 'http://example.com',
+      iat: currentTime,
+      exp: currentTime + 3600,
+      sub: userId,
+    };
+    const algorithm = 'HS256';
+
+    const token = jwt.sign(payload, PRIVATE_KEY, { algorithm });
+
+    const decoded = jwt.verify(token, PRIVATE_KEY, { algorithms: [algorithm] });
+
+    return {
+      token,
+      decoded,
+    };
   }
 }
